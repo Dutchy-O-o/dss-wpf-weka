@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{C8D7E3A2-9B5C-4A6F-B7D1-3E2F9C8A1B02}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DSSAppWpf</RootNamespace>
+    <AssemblyName>DSSAppWpf</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="IKVM.OpenJDK.Beans"><HintPath>libs\IKVM.OpenJDK.Beans.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Charsets"><HintPath>libs\IKVM.OpenJDK.Charsets.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Corba"><HintPath>libs\IKVM.OpenJDK.Corba.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Core"><HintPath>libs\IKVM.OpenJDK.Core.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Jdbc"><HintPath>libs\IKVM.OpenJDK.Jdbc.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Management"><HintPath>libs\IKVM.OpenJDK.Management.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Media"><HintPath>libs\IKVM.OpenJDK.Media.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Misc"><HintPath>libs\IKVM.OpenJDK.Misc.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Naming"><HintPath>libs\IKVM.OpenJDK.Naming.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Remoting"><HintPath>libs\IKVM.OpenJDK.Remoting.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Security"><HintPath>libs\IKVM.OpenJDK.Security.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.SwingAWT"><HintPath>libs\IKVM.OpenJDK.SwingAWT.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Text"><HintPath>libs\IKVM.OpenJDK.Text.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Tools"><HintPath>libs\IKVM.OpenJDK.Tools.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.Util"><HintPath>libs\IKVM.OpenJDK.Util.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.XML.API"><HintPath>libs\IKVM.OpenJDK.XML.API.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Bind"><HintPath>libs\IKVM.OpenJDK.XML.Bind.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Crypto"><HintPath>libs\IKVM.OpenJDK.XML.Crypto.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Parse"><HintPath>libs\IKVM.OpenJDK.XML.Parse.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.XML.Transform"><HintPath>libs\IKVM.OpenJDK.XML.Transform.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.XML.WebServices"><HintPath>libs\IKVM.OpenJDK.XML.WebServices.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.OpenJDK.XML.XPath"><HintPath>libs\IKVM.OpenJDK.XML.XPath.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="IKVM.Runtime"><HintPath>libs\IKVM.Runtime.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+    <Reference Include="weka"><HintPath>libs\weka.dll</HintPath><SpecificVersion>False</SpecificVersion></Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\AppStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\AlgorithmDescriptor.cs" />
+    <Compile Include="Models\ClassifierResult.cs" />
+    <Compile Include="Models\DatasetInfo.cs" />
+    <Compile Include="Models\EvaluationOptions.cs" />
+    <Compile Include="Services\ClassifierFactory.cs" />
+    <Compile Include="Services\DatasetLoader.cs" />
+    <Compile Include="Services\EvaluationEngine.cs" />
+    <Compile Include="Services\ModelPersistence.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="iris.arff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="libs\IKVM.OpenJDK.Beans.dll"><Link>IKVM.OpenJDK.Beans.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Charsets.dll"><Link>IKVM.OpenJDK.Charsets.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Corba.dll"><Link>IKVM.OpenJDK.Corba.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Core.dll"><Link>IKVM.OpenJDK.Core.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Jdbc.dll"><Link>IKVM.OpenJDK.Jdbc.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Management.dll"><Link>IKVM.OpenJDK.Management.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Media.dll"><Link>IKVM.OpenJDK.Media.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Misc.dll"><Link>IKVM.OpenJDK.Misc.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Naming.dll"><Link>IKVM.OpenJDK.Naming.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Remoting.dll"><Link>IKVM.OpenJDK.Remoting.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Security.dll"><Link>IKVM.OpenJDK.Security.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.SwingAWT.dll"><Link>IKVM.OpenJDK.SwingAWT.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Text.dll"><Link>IKVM.OpenJDK.Text.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Tools.dll"><Link>IKVM.OpenJDK.Tools.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.Util.dll"><Link>IKVM.OpenJDK.Util.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.XML.API.dll"><Link>IKVM.OpenJDK.XML.API.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.XML.Bind.dll"><Link>IKVM.OpenJDK.XML.Bind.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.XML.Crypto.dll"><Link>IKVM.OpenJDK.XML.Crypto.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.XML.Parse.dll"><Link>IKVM.OpenJDK.XML.Parse.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.XML.Transform.dll"><Link>IKVM.OpenJDK.XML.Transform.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.XML.WebServices.dll"><Link>IKVM.OpenJDK.XML.WebServices.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.OpenJDK.XML.XPath.dll"><Link>IKVM.OpenJDK.XML.XPath.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\IKVM.Runtime.dll"><Link>IKVM.Runtime.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+    <Content Include="libs\weka.dll"><Link>weka.dll</Link><CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory></Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.WinFx.targets" Condition="false" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.WindowsDesktop.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.WindowsDesktop.targets')" />
+</Project>

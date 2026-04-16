@@ -1,0 +1,28 @@
+DSSAppWpf
+Copyright (C) 2026 Emre
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+The full text of the GNU General Public License v3.0 is available at:
+https://www.gnu.org/licenses/gpl-3.0.txt
+
+----
+
+This software depends on third-party libraries with their own licenses:
+
+  * Weka (https://www.cs.waikato.ac.nz/ml/weka/)
+      Licensed under the GNU General Public License v3.0.
+
+  * IKVM.NET (https://github.com/ikvmnet/ikvm)
+      Licensed under the zlib/Apache 2.0 license.
