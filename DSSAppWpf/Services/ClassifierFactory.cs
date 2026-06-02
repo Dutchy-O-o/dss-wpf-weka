@@ -66,7 +66,7 @@ namespace DSSAppWpf.Services
             AddKnn(list, 7);
             AddKnn(list, 9);
 
-            list.Add(new AlgorithmDescriptor
+            var j48 = new AlgorithmDescriptor
             {
                 Key = "J48",
                 DisplayName = "J48 (C4.5)",
@@ -74,8 +74,20 @@ namespace DSSAppWpf.Services
                 Preprocessing = PreprocessingMode.None,
                 Description = "C4.5 karar ağacı. Veri tipi önemli değil.",
                 IsSelected = true,
-                Builder = delegate { return new weka.classifiers.trees.J48(); }
-            });
+                HyperParams = new List<HyperParam>
+                {
+                    new HyperParam { Name = "Güven faktörü (C)", Min = 0.05, Max = 0.5, Step = 0.05, Value = 0.25, IsInteger = false },
+                    new HyperParam { Name = "Min yaprak örneği (M)", Min = 1, Max = 20, Step = 1, Value = 2, IsInteger = true }
+                }
+            };
+            j48.Builder = delegate
+            {
+                var c = new weka.classifiers.trees.J48();
+                c.setConfidenceFactor((float)j48.HyperParams[0].Value);
+                c.setMinNumObj((int)j48.HyperParams[1].Value);
+                return c;
+            };
+            list.Add(j48);
             list.Add(new AlgorithmDescriptor
             {
                 Key = "RandomTree",
@@ -86,7 +98,7 @@ namespace DSSAppWpf.Services
                 IsSelected = true,
                 Builder = delegate { return new weka.classifiers.trees.RandomTree(); }
             });
-            list.Add(new AlgorithmDescriptor
+            var rf = new AlgorithmDescriptor
             {
                 Key = "RandomForest",
                 DisplayName = "Random Forest",
@@ -94,8 +106,20 @@ namespace DSSAppWpf.Services
                 Preprocessing = PreprocessingMode.None,
                 Description = "Birden fazla rastgele ağacın topluluk (ensemble) yöntemi.",
                 IsSelected = true,
-                Builder = delegate { return new weka.classifiers.trees.RandomForest(); }
-            });
+                HyperParams = new List<HyperParam>
+                {
+                    new HyperParam { Name = "Ağaç sayısı (I)", Min = 10, Max = 500, Step = 10, Value = 100, IsInteger = true },
+                    new HyperParam { Name = "Maks derinlik (0=sınırsız)", Min = 0, Max = 50, Step = 1, Value = 0, IsInteger = true }
+                }
+            };
+            rf.Builder = delegate
+            {
+                var c = new weka.classifiers.trees.RandomForest();
+                c.setNumTrees((int)rf.HyperParams[0].Value);
+                c.setMaxDepth((int)rf.HyperParams[1].Value);
+                return c;
+            };
+            list.Add(rf);
             list.Add(new AlgorithmDescriptor
             {
                 Key = "REPTree",
@@ -106,7 +130,7 @@ namespace DSSAppWpf.Services
                 IsSelected = true,
                 Builder = delegate { return new weka.classifiers.trees.REPTree(); }
             });
-            list.Add(new AlgorithmDescriptor
+            var mlp = new AlgorithmDescriptor
             {
                 Key = "MLP",
                 DisplayName = "Multilayer Perceptron (ANN)",
@@ -114,9 +138,24 @@ namespace DSSAppWpf.Services
                 Preprocessing = PreprocessingMode.NormalizeAndDummy,
                 Description = "Yapay sinir ağı; sayısal ve normalize veri gerektirir.",
                 IsSelected = true,
-                Builder = delegate { return new weka.classifiers.functions.MultilayerPerceptron(); }
-            });
-            list.Add(new AlgorithmDescriptor
+                HyperParams = new List<HyperParam>
+                {
+                    new HyperParam { Name = "Öğrenme oranı (L)", Min = 0.05, Max = 0.9, Step = 0.05, Value = 0.3, IsInteger = false },
+                    new HyperParam { Name = "Momentum (M)", Min = 0.0, Max = 0.9, Step = 0.05, Value = 0.2, IsInteger = false },
+                    new HyperParam { Name = "Eğitim adımı (N)", Min = 100, Max = 1000, Step = 100, Value = 500, IsInteger = true }
+                }
+            };
+            mlp.Builder = delegate
+            {
+                var c = new weka.classifiers.functions.MultilayerPerceptron();
+                c.setLearningRate(mlp.HyperParams[0].Value);
+                c.setMomentum(mlp.HyperParams[1].Value);
+                c.setTrainingTime((int)mlp.HyperParams[2].Value);
+                return c;
+            };
+            list.Add(mlp);
+
+            var smo = new AlgorithmDescriptor
             {
                 Key = "SMO",
                 DisplayName = "SMO (SVM)",
@@ -124,8 +163,18 @@ namespace DSSAppWpf.Services
                 Preprocessing = PreprocessingMode.NormalizeAndDummy,
                 Description = "Sequential Minimal Optimization ile Destek Vektör Makinesi.",
                 IsSelected = true,
-                Builder = delegate { return new weka.classifiers.functions.SMO(); }
-            });
+                HyperParams = new List<HyperParam>
+                {
+                    new HyperParam { Name = "Karmaşıklık (C)", Min = 0.1, Max = 10, Step = 0.1, Value = 1.0, IsInteger = false }
+                }
+            };
+            smo.Builder = delegate
+            {
+                var c = new weka.classifiers.functions.SMO();
+                c.setC(smo.HyperParams[0].Value);
+                return c;
+            };
+            list.Add(smo);
 
             return list;
         }

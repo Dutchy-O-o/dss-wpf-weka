@@ -16,6 +16,10 @@ namespace DSSAppWpf.Models
         public string ErrorMessage { get; set; }
         public weka.classifiers.Classifier TrainedClassifier { get; set; }
 
+        // Confusion matrix (satır = gerçek sınıf, sütun = tahmin) ve sınıf etiketleri.
+        public double[][] ConfusionMatrix { get; set; }
+        public string[] ClassLabels { get; set; }
+
         public bool IsSuccessful { get { return string.IsNullOrEmpty(ErrorMessage); } }
 
         public string AccuracyText

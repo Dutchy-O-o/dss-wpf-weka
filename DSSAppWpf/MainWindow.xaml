@@ -80,6 +80,13 @@
                                        VerticalAlignment="Center"/>
                         </StackPanel>
                     </ListBoxItem>
+                    <ListBoxItem Tag="4">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="📈" FontSize="16" Width="26"/>
+                            <TextBlock Text="Analiz" FontSize="13" FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ListBoxItem>
                 </ListBox>
             </DockPanel>
         </Border>
@@ -407,6 +414,16 @@
                                         <TextBlock x:Name="lblAlgoDesc" Style="{StaticResource T.Body}"
                                                    TextWrapping="Wrap" LineHeight="20"/>
                                     </Border>
+
+                                    <!-- Hiperparametreler -->
+                                    <TextBlock x:Name="lblParamTitle" Text="HİPERPARAMETRELER"
+                                               Style="{StaticResource T.Label}" Margin="0,20,0,4"
+                                               Visibility="Collapsed"/>
+                                    <TextBlock x:Name="lblParamHint"
+                                               Text="Değerleri ayarlayıp Algoritmalar sayfasından tekrar çalıştırın."
+                                               Style="{StaticResource T.Muted}" Margin="0,0,0,10"
+                                               Visibility="Collapsed"/>
+                                    <StackPanel x:Name="paramHost"/>
                                 </StackPanel>
                             </DockPanel>
                         </Border>
@@ -575,15 +592,21 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel>
-                                <TextBlock Text="AKTİF MODEL" Style="{StaticResource T.Label}"/>
+                                <TextBlock Text="TAHMİN İÇİN MODEL SEÇİN" Style="{StaticResource T.Label}"/>
+                                <ComboBox x:Name="cmbActiveModel"
+                                          Style="{StaticResource S.ComboBox}"
+                                          Margin="0,8,16,0"
+                                          DisplayMemberPath="Display"
+                                          Visibility="Collapsed"
+                                          SelectionChanged="cmbActiveModel_SelectionChanged"/>
                                 <TextBlock x:Name="lblActiveModel"
                                            Text="Model yüklü değil. Önce algoritmaları çalıştırın ya da diskten yükleyin."
-                                           Style="{StaticResource T.Body}" Margin="0,8,0,0"
+                                           Style="{StaticResource T.Body}" Margin="0,10,0,0"
                                            TextWrapping="Wrap"/>
                             </StackPanel>
                             <Button Grid.Column="1" Content="📂  Diskten Yükle"
                                     Style="{StaticResource S.GhostButton}"
-                                    VerticalAlignment="Center" Click="btnLoadModel_Click"/>
+                                    VerticalAlignment="Top" Click="btnLoadModel_Click"/>
                         </Grid>
                     </Border>
 
@@ -602,25 +625,171 @@
                     <Border Grid.Row="2" Margin="0,18,0,0" CornerRadius="12" Padding="20"
                             BorderBrush="{StaticResource B.CardBorder}" BorderThickness="1"
                             Background="{StaticResource B.Card}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Button Content="🎯  TAHMİN ET" Style="{StaticResource S.SuccessButton}"
-                                    Click="btnPredict_Click"/>
-                            <Border Grid.Column="1" Margin="20,0,0,0" Padding="20,12" CornerRadius="8"
-                                    Background="{StaticResource B.SuccessSoft}"
-                                    VerticalAlignment="Stretch">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Content="🎯  TAHMİN ET" Style="{StaticResource S.SuccessButton}"
+                                        Click="btnPredict_Click"/>
+                                <Border Grid.Column="1" Margin="20,0,0,0" Padding="20,12" CornerRadius="8"
+                                        Background="{StaticResource B.SuccessSoft}"
+                                        VerticalAlignment="Stretch">
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock Text="TAHMİN" Style="{StaticResource T.Label}"
+                                                   Foreground="#FF15803D"/>
+                                        <TextBlock x:Name="lblPredictionResult" Text="—"
+                                                   FontSize="22" FontWeight="Bold"
+                                                   Foreground="{StaticResource B.Success}"/>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                            <!-- Sınıf olasılıkları -->
+                            <TextBlock x:Name="lblProbTitle" Text="SINIF OLASILIKLARI"
+                                       Style="{StaticResource T.Label}" Margin="0,18,0,8"
+                                       Visibility="Collapsed"/>
+                            <ItemsControl x:Name="predictProbs">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="0,0,0,8">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="140"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="64"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Label}" Style="{StaticResource T.Body}"
+                                                       VerticalAlignment="Center"
+                                                       FontWeight="{Binding Weight}"/>
+                                            <Border Grid.Column="1" Background="#FFE5E7EB" CornerRadius="4"
+                                                    Height="14" VerticalAlignment="Center">
+                                                <Border Background="{Binding Brush}" CornerRadius="4"
+                                                        HorizontalAlignment="Left" Width="{Binding BarWidth}"/>
+                                            </Border>
+                                            <TextBlock Grid.Column="2" Text="{Binding PctText}"
+                                                       Style="{StaticResource T.Body}" FontWeight="SemiBold"
+                                                       HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- ===================== PAGE 5: ANALIZ ===================== -->
+                <Grid x:Name="page4" Margin="28,22,28,28" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Tab bar -->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,18">
+                        <Button x:Name="tabCmBtn" Content="Confusion Matrix"
+                                Style="{StaticResource S.GhostButton}" Click="ShowCmTab_Click"
+                                Margin="0,0,8,0" BorderBrush="{StaticResource B.Primary}"
+                                Foreground="{StaticResource B.Primary}"/>
+                        <Button x:Name="tabFeatBtn" Content="Öznitelik Önemi"
+                                Style="{StaticResource S.GhostButton}" Click="ShowFeatTab_Click"
+                                Margin="0,0,8,0"/>
+                        <Button x:Name="tabScatterBtn" Content="Dağılım Grafiği"
+                                Style="{StaticResource S.GhostButton}" Click="ShowScatterTab_Click"/>
+                    </StackPanel>
+
+                    <!-- CONFUSION MATRIX -->
+                    <Border x:Name="cmPanel" Grid.Row="1" Style="{StaticResource S.Card}">
+                        <DockPanel LastChildFill="True">
+                            <Grid DockPanel.Dock="Top" Margin="0,0,0,14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="340"/>
+                                </Grid.ColumnDefinitions>
                                 <StackPanel VerticalAlignment="Center">
-                                    <TextBlock Text="TAHMİN" Style="{StaticResource T.Label}"
-                                               Foreground="#FF15803D"/>
-                                    <TextBlock x:Name="lblPredictionResult" Text="—"
-                                               FontSize="22" FontWeight="Bold"
-                                               Foreground="{StaticResource B.Success}"/>
+                                    <TextBlock Text="CONFUSION MATRIX" Style="{StaticResource T.Label}"/>
+                                    <TextBlock Text="Satır = gerçek sınıf  ·  Sütun = tahmin edilen sınıf"
+                                               Style="{StaticResource T.Muted}"/>
                                 </StackPanel>
-                            </Border>
-                        </Grid>
+                                <ComboBox Grid.Column="1" x:Name="cmbCmModel"
+                                          Style="{StaticResource S.ComboBox}"
+                                          DisplayMemberPath="Display"
+                                          SelectionChanged="cmbCmModel_SelectionChanged"/>
+                            </Grid>
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                          VerticalScrollBarVisibility="Auto">
+                                <Grid x:Name="cmGrid" HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" Margin="0,10,0,0"/>
+                            </ScrollViewer>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- FEATURE IMPORTANCE -->
+                    <Border x:Name="featPanel" Grid.Row="1" Style="{StaticResource S.Card}"
+                            Visibility="Collapsed">
+                        <DockPanel LastChildFill="True">
+                            <TextBlock DockPanel.Dock="Top" Text="ÖZNİTELİK ÖNEMİ (Information Gain)"
+                                       Style="{StaticResource T.Label}" Margin="0,0,0,6"/>
+                            <TextBlock DockPanel.Dock="Top" x:Name="lblFeatInfo"
+                                       Text="Her özniteliğin sınıfı belirlemedeki bilgi kazancı (yüksek = daha ayırt edici)."
+                                       Style="{StaticResource T.Muted}" Margin="0,0,0,14"
+                                       TextWrapping="Wrap"/>
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsControl x:Name="featList">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="0,0,0,10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="220"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="90"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Text="{Binding Label}" Style="{StaticResource T.Body}"
+                                                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                                <Border Grid.Column="1" Background="#FFE5E7EB" CornerRadius="4"
+                                                        Height="18" VerticalAlignment="Center">
+                                                    <Border Background="{StaticResource B.Primary}" CornerRadius="4"
+                                                            HorizontalAlignment="Left" Width="{Binding BarWidth}"/>
+                                                </Border>
+                                                <TextBlock Grid.Column="2" Text="{Binding ValueText}"
+                                                           Style="{StaticResource T.Body}" FontWeight="SemiBold"
+                                                           HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </DockPanel>
+                    </Border>
+
+                    <!-- SCATTER -->
+                    <Border x:Name="scatterPanel" Grid.Row="1" Style="{StaticResource S.Card}"
+                            Visibility="Collapsed">
+                        <DockPanel LastChildFill="True">
+                            <Grid DockPanel.Dock="Top" Margin="0,0,0,14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="X ekseni:" Style="{StaticResource T.Body}"
+                                           VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                <ComboBox Grid.Column="1" x:Name="cmbScatterX"
+                                          Style="{StaticResource S.ComboBox}"
+                                          SelectionChanged="Scatter_AxisChanged"/>
+                                <TextBlock Grid.Column="2" Text="Y ekseni:" Style="{StaticResource T.Body}"
+                                           VerticalAlignment="Center" Margin="16,0,8,0"/>
+                                <ComboBox Grid.Column="3" x:Name="cmbScatterY"
+                                          Style="{StaticResource S.ComboBox}"
+                                          SelectionChanged="Scatter_AxisChanged"/>
+                                <StackPanel Grid.Column="4" x:Name="scatterLegend" Orientation="Horizontal"
+                                            HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            </Grid>
+                            <Canvas x:Name="scatterCanvas" Background="#FFFAFBFC" ClipToBounds="True"
+                                    SizeChanged="scatterCanvas_SizeChanged"/>
+                        </DockPanel>
                     </Border>
                 </Grid>
 

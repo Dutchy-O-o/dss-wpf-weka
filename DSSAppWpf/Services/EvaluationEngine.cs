@@ -107,6 +107,7 @@ namespace DSSAppWpf.Services
             result.WeightedPrecision = eval.weightedPrecision();
             result.WeightedRecall = eval.weightedRecall();
             result.WeightedFMeasure = eval.weightedFMeasure();
+            CaptureConfusion(result, eval, train);
         }
 
         private static void FillFromCrossValidation(
@@ -128,6 +129,28 @@ namespace DSSAppWpf.Services
             result.WeightedPrecision = eval.weightedPrecision();
             result.WeightedRecall = eval.weightedRecall();
             result.WeightedFMeasure = eval.weightedFMeasure();
+            CaptureConfusion(result, eval, data);
+        }
+
+        // WEKA Evaluation'dan confusion matrix'i ve sınıf etiketlerini alır.
+        private static void CaptureConfusion(
+            ClassifierResult result, weka.classifiers.Evaluation eval,
+            weka.core.Instances data)
+        {
+            try
+            {
+                double[][] cm = eval.confusionMatrix();
+                result.ConfusionMatrix = cm;
+
+                weka.core.Attribute cls = data.classAttribute();
+                if (cls != null && cls.isNominal())
+                {
+                    string[] labels = new string[cls.numValues()];
+                    for (int i = 0; i < labels.Length; i++) labels[i] = cls.value(i);
+                    result.ClassLabels = labels;
+                }
+            }
+            catch { /* confusion matrix isteğe bağlı; başarısız olursa atla */ }
         }
     }
 }
